@@ -3,11 +3,23 @@
 * Routes that are visible to all (public) users.
 */
 
-Router.route('signup', {
-  path: '/signup',
-  template: 'signup',
+Router.route('latestPosts', {
+  path: '/',
+  template: 'latestPosts',
+  subscriptions: function() {
+    Meteor.subscribe('posts');
+  },
   onBeforeAction: function(){
-    Session.set('currentRoute', 'signup');
+    Session.set('currentRoute', 'latest-posts');
+    this.next();
+  }
+});
+
+Router.route('singlePost', {
+  path: '/posts/:slug',
+  template: 'singlePost',
+  onBeforeAction: function(){
+    Session.set('currentRoute', null);
     this.next();
   }
 });

@@ -1,0 +1,7 @@
+<template name="post">
+  <article class="post">
+    <h2 class="post-title"><a href="{{pathFor 'singlePost' slug=slug}}">{{title}}</a></h2>
+    <h4>{{date}} by {{author}}</h4>
+    {{{truncateString content 300}}}
+  </article>
+</template>

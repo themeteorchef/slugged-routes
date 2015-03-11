@@ -3,7 +3,7 @@
 * Data publications for the Example collection.
 */
 
-Meteor.publish('examplePublication', function(){
+Meteor.publish('posts', function(slug){
   // If need be, Meteor gives us access to the current user via this.userId.
   // Example below shows using this.userId to locate documents where the
   // owner field is equal to a userId. Additionally, a fields projection is
@@ -11,7 +11,7 @@ Meteor.publish('examplePublication', function(){
   // 0 = false).
 
   var user = this.userId;
-  var data = Example.find({"owner": user}, {fields: {"owner": 1}});
+  var data = Posts.find({});
 
   return data;
 });

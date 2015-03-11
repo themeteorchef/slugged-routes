@@ -8,9 +8,13 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="{{pathFor 'index'}}">Base</a>
+	      <a class="navbar-brand" href="{{pathFor 'latestPosts'}}">Command Module</a>
 	    </div>
 	    <div class="collapse navbar-collapse">
+	      <ul class="nav navbar-nav">
+					<li><a href="{{pathFor 'latestPosts'}}">Latest Posts</a></li>
+					<li><a href="{{pathFor 'archive'}}">Archive</a></li>
+	      </ul>
 	    	{{#if currentUser}}
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
@@ -23,7 +27,6 @@
 	      {{else}}
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="{{currentRoute 'login'}}"><a href="{{pathFor 'login'}}">Login</a></li>
-	        <li class="{{currentRoute 'signup'}}"><a href="{{pathFor 'signup'}}">Sign Up</a></li>
 	      </ul>
 	      {{/if}}
 	    </div> <!-- end .navbar-collapse -->

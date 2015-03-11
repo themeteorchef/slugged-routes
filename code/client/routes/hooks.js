@@ -36,11 +36,14 @@ userAuthenticated = function(){
 }
 
 /*
-* Run Hooks
+* Run Hooks Test
 */
 
 Router.onBeforeAction(checkUserLoggedIn, {
   except: [
+    'latestPosts',
+    'archive',
+    'singlePost',
     'signup',
     'login',
     'recover-password',

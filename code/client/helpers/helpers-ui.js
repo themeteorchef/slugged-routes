@@ -13,3 +13,17 @@
 UI.registerHelper('currentRoute', function(route){
   return Session.equals('currentRoute', route) ? 'active' : '';
 });
+
+/*
+* Truncate String
+* Take the passed string and character count, returning the truncated string.
+*/
+
+UI.registerHelper('truncateString', function(string, characters){
+  if (string.length > characters) {
+    var truncated = string.substring(0, characters);
+    return truncated + "...";
+  } else {
+    return string;
+  }
+});
