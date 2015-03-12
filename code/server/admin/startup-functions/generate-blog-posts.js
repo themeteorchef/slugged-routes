@@ -14,6 +14,12 @@ generateBlogPosts = function(){
     var post      = postsToJson[i];
     var checkPost = Posts.findOne({"slug": post.slug});
 
+    // Set a fake date on the post, offset by a day. Since we're storing this
+    // as an epoch, we'll use a helper to convert it to human readable text when
+    // we're on the client.
+    var fakeDate = ( new Date(2015, 2, 10 + i).getTime() / 1000 );
+    post.date    = fakeDate;
+
     // If an existing user is not found, create the account.
     if ( !checkPost ) {
       Posts.insert(post);

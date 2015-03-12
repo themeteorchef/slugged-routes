@@ -4,14 +4,16 @@
 */
 
 Meteor.publish('posts', function(slug){
-  // If need be, Meteor gives us access to the current user via this.userId.
-  // Example below shows using this.userId to locate documents where the
-  // owner field is equal to a userId. Additionally, a fields projection is
-  // added to specify which fields you want to return (where 1 = true and
-  // 0 = false).
-
-  var user = this.userId;
-  var data = Posts.find({});
-
-  return data;
+  // If we have a slug, make sure we check it. This allows to use our publication
+  // twice by saying "if we're passing a slug" (meaning we're on a single post),
+  // "go ahead and look up that individual post. Otherwise, just give me all of
+  // the posts." We *could* improve this further using something like pagination
+  // wherein we also return only a fixed number of posts based on the current
+  // page the user is on.
+  slug ? check(slug, String) : null;
+  var data = slug ? Posts.find({"slug": slug}) : Posts.find({});
+  if (data) {
+    return data;
+  }
+  this.ready();
 });

@@ -1,7 +1,11 @@
 <template name="post">
   <article class="post">
-    <h2 class="post-title"><a href="{{pathFor 'singlePost' slug=slug}}">{{title}}</a></h2>
-    <h4>{{date}} by {{author}}</h4>
-    {{{truncateString content 300}}}
+    <h2 class="post-title"><a href="{{#unless single}}{{pathFor 'singlePost' slug=slug}}{{else}}#{{/unless}}">{{title}}</a></h2>
+    <h4 class="post-meta">{{epochToString date}} by {{author}}</h4>
+    {{#if single}}
+      {{{truncateString content 300}}}
+    {{else}}
+      {{{content}}}
+    {{/if}}
   </article>
 </template>

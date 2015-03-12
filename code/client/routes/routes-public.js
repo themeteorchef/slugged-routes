@@ -11,6 +11,7 @@ Router.route('latestPosts', {
   },
   onBeforeAction: function(){
     Session.set('currentRoute', 'latest-posts');
+    Session.set('isSinglePost', false);
     this.next();
   }
 });
@@ -18,8 +19,18 @@ Router.route('latestPosts', {
 Router.route('singlePost', {
   path: '/posts/:slug',
   template: 'singlePost',
-  onBeforeAction: function(){
+  subscriptions: function() {
+    Meteor.subscribe('posts', this.params.slug);
+  },
+  data: function() {
+    var post = Posts.findOne({"slug": this.params.slug});
+    if (post) {
+      return post;
+    }
+  },
+  onBeforeAction: function() {
     Session.set('currentRoute', null);
+    Session.set('isSinglePost', true);
     this.next();
   }
 });

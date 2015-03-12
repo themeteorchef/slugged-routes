@@ -9,7 +9,7 @@
 
 Template.latestPosts.helpers({
   posts: function(){
-    var getPosts = Posts.find();
+    var getPosts = Posts.find({}, {sort: {"date": -1}});
     if (getPosts) {
       return getPosts;
     }

@@ -36,7 +36,19 @@ userAuthenticated = function(){
 }
 
 /*
-* Run Hooks Test
+* Hook: Reset Scroll
+* When moving between routes, reset the scroll position in the browser to zero
+* so that if a user was scrolled down on the previous page, changing routes
+* resets the scroll to the top.
+*/
+
+resetScroll = function(){
+  $('body').scrollTop(0);
+  this.next();
+}
+
+/*
+* Run Hooks
 */
 
 Router.onBeforeAction(checkUserLoggedIn, {
@@ -59,3 +71,5 @@ Router.onBeforeAction(userAuthenticated, {
     'reset-password'
   ]
 });
+
+Router.onBeforeAction(resetScroll);
