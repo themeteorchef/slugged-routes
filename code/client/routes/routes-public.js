@@ -6,9 +6,6 @@
 Router.route('latestPosts', {
   path: '/',
   template: 'latestPosts',
-  subscriptions: function() {
-    Meteor.subscribe('posts');
-  },
   onBeforeAction: function(){
     Session.set('currentRoute', 'latest-posts');
     Session.set('isSinglePost', false);
@@ -20,9 +17,6 @@ Router.route('singlePost', {
   name: 'post.show',
   path: '/posts/:slug',
   template: 'singlePost',
-  subscriptions: function() {
-    Meteor.subscribe('posts', this.params.slug);
-  },
   data: function() {
     var post = Posts.findOne({"slug": this.params.slug});
     if (post) {

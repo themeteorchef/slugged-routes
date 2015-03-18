@@ -1,7 +1,7 @@
 #### The Meteor Chef
 #### \#006 - Slugged Routes
 
-In this recipe we'll help Command Module, a spacecraft design blog, learn how to use slugged routes to create a blog with pretty permalinks. We'll make use of Iron Router's `waitOn` and `data` options to pull blog posts out of our database and play with JavaScript's `regExp` and `replace` to sanitize our post titles.
+In this recipe we'll help Command Module, a spacecraft design blog, add pretty permalinks to their blog. We'll learn about Meteor's new Template.subscribe method as well as Template.subscriptionsReady helper. We'll also make use of Iron Router's `data` option to pull blog posts out of our database and play with JavaScript's `regExp` and `replace` to sanitize our post titles.
 
 
 [Read on The Meteor Chef](http://themeteorchef.com/recipes/slugged-routes)  

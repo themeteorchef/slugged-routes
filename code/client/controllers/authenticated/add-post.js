@@ -7,7 +7,7 @@
 * Rendered
 */
 
-Template.addPost.rendered = function() {
+Template.addPost.onRendered(function() {
   $("#add-post").validate({
     rules: {
       title: {
@@ -62,7 +62,7 @@ Template.addPost.rendered = function() {
       });
     }
   });
-}
+});
 
 /*
 * Helpers
