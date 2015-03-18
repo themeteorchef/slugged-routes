@@ -17,6 +17,7 @@ Router.route('latestPosts', {
 });
 
 Router.route('singlePost', {
+  name: 'post.show',
   path: '/posts/:slug',
   template: 'singlePost',
   subscriptions: function() {

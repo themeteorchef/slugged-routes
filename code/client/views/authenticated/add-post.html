@@ -2,15 +2,24 @@
   <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
       <h3 class="page-header">Add a Post</h3>
-      <form>
+      <form id="add-post">
         <div class="form-group">
           <input type="text" name="title" class="form-control" placeholder="Post Title">
         </div>
         <div class="form-group">
-          <input type="text" name="slug" class="form-control" placeholder="Post Slug">
+          <div class="input-group">
+            <div class="input-group-addon">{{currentUrl}}/posts/</div>
+            <input type="text" disabled name="slug" class="form-control">
+          </div>
         </div>
         <div class="form-group">
           <textarea name="content" class="form-control" placeholder="Type your post here..."></textarea>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">Author</div>
+            <input type="text" name="author" class="form-control" placeholder="George Jetson" value="George Jetson">
+          </div>
         </div>
         <input type="submit" class="btn btn-success" value="Blast Off">
       </form>
