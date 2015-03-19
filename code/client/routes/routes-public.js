@@ -17,6 +17,9 @@ Router.route('singlePost', {
   name: 'post.show',
   path: '/posts/:slug',
   template: 'singlePost',
+  subscriptions: function() {
+    return Meteor.subscribe('singlePost', this.params.slug);
+  },
   data: function() {
     var post = Posts.findOne({"slug": this.params.slug});
     if (post) {

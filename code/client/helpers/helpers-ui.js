@@ -20,7 +20,7 @@ UI.registerHelper('currentRoute', function(route){
 */
 
 UI.registerHelper('truncateString', function(string, characters){
-  if (string.length > characters) {
+  if ( string && string.length > characters) {
     var truncated = string.substring(0, characters);
     return truncated + "...";
   } else {

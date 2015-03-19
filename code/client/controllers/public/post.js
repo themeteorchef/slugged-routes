@@ -4,15 +4,6 @@
 */
 
 /*
-* Created
-*/
-
-Template.post.onCreated(function(){
-  var slug = Router.current().params.slug;
-  this.subscribe('posts', slug);
-});
-
-/*
 * Helpers
 */
 

@@ -2,10 +2,10 @@
   <article class="post">
     <h2 class="post-title"><a href="{{#unless single}}{{pathFor route='post.show' slug=slug}}{{else}}#{{/unless}}">{{title}}</a></h2>
     <h4 class="post-meta">{{epochToString date}} by {{author}}</h4>
-    {{#if single}}
+    {{#unless single}}
       {{{truncateString content 300}}}
     {{else}}
       {{{content}}}
-    {{/if}}
+    {{/unless}}
   </article>
 </template>

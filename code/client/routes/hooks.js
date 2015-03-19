@@ -55,7 +55,7 @@ Router.onBeforeAction(checkUserLoggedIn, {
   except: [
     'latestPosts',
     'archive',
-    'singlePost',
+    'post.show',
     'signup',
     'login',
     'recover-password',

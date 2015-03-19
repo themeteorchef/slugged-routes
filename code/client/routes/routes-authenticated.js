@@ -7,7 +7,7 @@ Router.route('addPost', {
   path: '/posts/add',
   template: 'addPost',
   subscriptions: function() {
-    Meteor.subscribe('posts');
+    return Meteor.subscribe('posts');
   },
   onBeforeAction: function(){
     Session.set('currentRoute', 'add-post');
