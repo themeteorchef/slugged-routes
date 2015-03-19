@@ -8,7 +8,7 @@ Meteor.publish('posts', function(){
   if (data) {
     return data;
   }
-  this.ready();
+  return this.ready();
 });
 
 Meteor.publish('singlePost', function(slug){
@@ -19,5 +19,5 @@ Meteor.publish('singlePost', function(slug){
   if (data) {
     return data;
   }
-  this.ready();
+  return this.ready();
 });
