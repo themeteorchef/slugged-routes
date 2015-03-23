@@ -1,7 +1,7 @@
 #### The Meteor Chef
 #### \#006 - Slugged Routes
 
-In this recipe we'll help Command Module, a spacecraft design blog, add pretty permalinks to their site. We'll make use of Iron Router's data option to pull blog posts out of our database and use regular expressions along with JavaScript's replace method to convert our post titles into slugs.
+In this recipe we'll help Command Module, a space blog, add pretty permalinks to their site. We'll make use of Iron Router's data option to pull blog posts out of our database and use regular expressions along with JavaScript's replace method to convert our post titles into slugs.
 
 
 [Read on The Meteor Chef](http://themeteorchef.com/recipes/slugged-routes)  
