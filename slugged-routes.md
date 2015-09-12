@@ -1,7 +1,7 @@
-#### Getting Started
+### Getting Started
 Although we won't cover its usage in this recipe, the only additional package being added to this recipe outside of those found in [Base](https://github.com/themeteorchef/base) (the boilerplate kit used here on The Meteor Chef) is the [`momentjs:moment`](https://atmospherejs.com/momentjs/moment) package. In order to get all of the packages you'll need, it's recommended that you start with [a clone of this recipe's source](https://github.com/themeteorchef/slugged-routes), or take a look at the ["Packages Included"](https://github.com/themeteorchef/base#packages-included) list for Base over on GitHub.
 
-#### Pretty Permalinks
+### Pretty Permalinks
 Our site, Command Module, wants to improve how their articles are linked. By default, the route for their articles is based on the ID of the document in their `Posts` collection (e.g., `http://commandmodule.io/posts/1234567890`). Instead, we're looking to get their routes set up to use pretty permalinks, or URLs based on the actual _title_ of the post `http://commandmodule.io/posts/awesome-spaceship-pictures`. How do we do it?
 
 <div class="note">
@@ -9,10 +9,11 @@ Our site, Command Module, wants to improve how their articles are linked. By def
   <p>Keep in mind, we're assuming that a Posts collection already exists so we'll skip creating that. If you'd like to see how this is defined, take a look at our definition in <a href="https://github.com/themeteorchef/slugged-routes/blob/master/code/collections/posts.js">/collections/posts.js</a></p>
 </div>
 
-##### Setting Up Our Routes
+#### Setting Up Our Routes
 We need to start by setting up our routes to accept _slugs_ instead of ID's. Let's take a look at our `/client/routes/routes-public.js` file first.
 
 <p class="block-header">/client/routes/routes-public.js</p>
+
 ```.lang-javascript
 Router.route('singlePost', {
   name: 'post.show',
@@ -47,6 +48,7 @@ What's cool about this is that we can put any name we want here. So, `:slug` cou
 Okay, we've got our path...now what? Next, hop down to the `subscriptions` option on our route. This option allows us to load in our data subscriptions _before_ our route actually loads. You may have done this before using Iron Router's `waitOn` option. These two functions (`subscriptions` and `waitOn`) are pretty much identical, except that `subscriptions` acts as a pseudonym and is intended only for data subscriptions. Phew. Make sense?
 
 <p class="block-header">/client/routes/routes-public.js</p>
+
 ```.lang-javascript
 Router.route('singlePost', {
   [...]
@@ -64,6 +66,7 @@ For example if we have a URL like `http://localhost:3000/posts/doughnuts-are-rad
 Okay so we're subscribing to `singlePost` and passing it the slug from our URL, but what exactly does this all mean? Let's hop over to `/server/publications/posts.js` and take a look at the publication we're trying to connect to.
 
 <p class="block-header">/server/publications/posts.js</p>
+
 ```.lang-javascript
 Meteor.publish('singlePost', function(slug){
   check(slug, String);
@@ -92,10 +95,11 @@ We're not using a callback in our subscriptions, but it's good to keep this as a
 
 Awesome! So now we've got our publication wired to our subscription and we should have some data flowing to our template. But wait...what data? Ah ha! Let's jump back to our route definition real quick and then we'll see how all of this works.
 
-##### Using the `data` Option
+#### Using the `data` Option
 Back in our `singlePost` route definition, we can see that we're using `Posts.findOne()`.
 
 <p class="block-header">/client/routes/routes-public.js</p>
+
 ```.lang-javascript
 Router.route('singlePost', {
   [...]
@@ -129,6 +133,7 @@ The `data` option that we're looking at in our route is given to us as a conveni
 Neat, huh? Thanks to the `data` option, we can skip all of this! Now when we load up our template, we'll see our post. For context, let's take a look at our `post` template and talk about how it works.
 
 <p class="block-header">/client/views/public/post.html</p>
+
 ```.lang-markup
 <template name="post">
   <article class="post">
@@ -148,6 +153,7 @@ We've got a few things going on here, so let's step through it. First, it's impo
 This mostly comes into play in respect to how we link our title. If we take a look at the `<a>` tag inside of our `<h2 class="post-title">` element, we can see something going on:
 
 <p class="block-header">/client/views/public/post.html</p>
+
 ```.lang-markup
 <h2 class="post-title"><a href="{{#unless single}}{{pathFor route='post.show' slug=slug}}{{else}}#{{/unless}}">{{title}}</a></h2>
 ```
@@ -157,6 +163,7 @@ Here, we're making use of Handlebars' `{{#unless}}` block to say "unless we're o
 Before we move on, let's call attention to _how_ we're linking to our post.
 
 <p class="block-header">/client/views/public/post.html</p>
+
 ```.lang-markup
 {{pathFor route='post.show' slug=slug}}
 ```
@@ -167,10 +174,11 @@ This will make a little more sense later, but the point of this is that we're us
 
 Now, hold your hat. This probably won't make sense for just a little while longer. We've got one big question mark...how do we get this data into the database?
 
-#### Sanitizing Slugs and Inserting Data
+### Sanitizing Slugs and Inserting Data
 This is where we get into the meat of this recipe. Now that we have our template and route wired up to display our data, let's actually get some data into the database. In order to do this, we've set up a template called `addPost` with a form we can use to write up our post.
 
 <p class="block-header">/client/views/authenticated/add-post.html</p>
+
 ```.lang-markup
 <template name="addPost">
   <div class="row">
@@ -207,6 +215,7 @@ Pretty simple right? We've got a basic form setup to take in our data, but we al
 Here, we do this with a helper we've defined `{{currentUrl}}` which is equal the value of `window.location.origin`. We don't _need_ to do this, but it's a nice UX touch so our user knows where their post is actually being published. Okay. Let's see how this template is actually wired up.
 
 <p class="block-header">/client/controllers/authenticated/add-post.js</p>
+
 ```.lang-javascript
 Template.addPost.events({
   'submit form': function(e) {
@@ -229,10 +238,11 @@ Template.addPost.events({
 
 First, we start by looking at our the events for our `addPost` template. Because we'll be using some validation on our form (so cool, get excited), we need to make sure that our form's standard submit functionality is disabled. We achieve this by saying "when our form is submitted prevent the default function." Easy peasy. Next, we get a little crafty. Here, we're watching the `blur` event on our `name="title"` input. What we want to do here is say "when the user changes the post's title, update our slug field with the properly formatted slug." Okay...but how do we get the slug?
 
-##### Creating the `formatSlug` Function
+#### Creating the `formatSlug` Function
 In order to generate our slug, we'll need to do a bit of processing on the title our user types in. Because we'll be doing this multiple times, we can set up a helper function so we don't need to repeat the same work over and over. Let's take a look.
 
 <p class="block-header">/client/helpers/helper-functions.js</p>
+
 ```.lang-javascript
 formatSlug = function(value) {
 var formatted = value
@@ -261,10 +271,11 @@ Now, as far as I'm concerned this may as well be a crop circle. It _does work_, 
 
 So, after all this hullabaloo, we get back our string `formatted-just-like-this`.
 
-##### Validating Our Slug
+#### Validating Our Slug
 Back in our `addPost` controller, let's shift our focus to the validation step. This is really cool.
 
 <p class="block-header">/client/controllers/authenticated/add-post.js</p>
+
 ```.lang-javascript
 Template.addPost.onRendered(function() {
   $("#add-post").validate({
@@ -320,6 +331,7 @@ Pretty basic. What we're doing here is validating our form to make sure that our
 Here, we've added a custom validator for our form field to determine whether or not our post already exists. Say what? As a UX touch and for our own sanity, we're checking whether or not the passed title's slug equivalent _already exists in the database_. Woah! Yeah. Seriously. Let's take a look at our custom validator.
 
 <p class="block-header">/client/helpers/custom-validation.js</p>
+
 ```.lang-javascript
 $.validator.addMethod("postExists", function(value){
   var formatted = formatSlug(value);
@@ -339,6 +351,7 @@ The difference [as described in this Stack Overflow post](http://stackoverflow.c
 Cool...so we've got this field validated. Now what? Real quick, let's rewind back to our blur event for our title field where we can see some serious dorkery going on.
 
 <p class="block-header">/client/controllers/authenticated/add-post.js</p>
+
 ```.lang-javascript
 Template.addPost.events({
   'blur [name="title"]': function() {
@@ -359,6 +372,7 @@ Template.addPost.events({
 We want to call attention to our `isValid` variable. What this is doing is looking at our `[name="title"]` field on our form and checking whether or not our validation says it's valid (i.e., does the field have a value and is the post title unique). To safeguard our slug field and save us a few processes, we prevent updating our `[name='slug']` field until we're _certain_ that our title field is valid. Pretty cool, yeah? Okay. Let's zip back up to our `submitHandler` callback in our validation.
 
 <p class="block-header">/client/controllers/authenticated/add-post.js</p>
+
 ```.lang-javascript
 Template.addPost.onRendered(function() {
   $("#add-post").validate({
