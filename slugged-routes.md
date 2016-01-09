@@ -82,7 +82,7 @@ See it coming together? Here, we're defining our publication `singlePost` and ac
 
 Note that here, where we may have simply passed an ID to our `find()` before, we're making use of our slug `Posts.find({"slug": slug});`. This is telling MongoDB to find a _single_ document where the key `slug` is equal to the `slug` we've passed over from our route's path (as part of our subscription `Meteor.subscribe('singlePost', this.params.slug)`). We do this not only because we want to find this specific document, but also because this ensures this is the _only_ post being sent down the wire to the client. If we were to just do `Posts.find()` our code would technically still work. In our version, though, we're limiting what we're pulling out of the database to make our code a little more efficient.
 
-Finally, we tell our publication to return the document it finds (if it finds one). Lastly, we return `this.ready()` as a precaution to complete our subscription in the event that a document isn't found. Per the [Meteor documentation]():
+Finally, we tell our publication to return the document it finds (if it finds one). Lastly, we return `this.ready()` as a precaution to complete our subscription in the event that a document isn't found. Per the [Meteor documentation](https://docs.meteor.com/#/full/publish_ready):
 
 > Informs the subscriber that an initial, complete snapshot of the record set has been sent. This will trigger a call on the client to the onReady callback passed to  Meteor.subscribe, if any.
 
@@ -170,7 +170,7 @@ Before we move on, let's call attention to _how_ we're linking to our post.
 
 Oh, Iron Router, you're so sweet to us. Here, we can see that we're making use of Iron Router's `{{pathFor}}` helper and setting a few arguments. What's unique about this usage is that usually we'll use the `{{pathFor}}` helper by just passing the title of our route. For example, we have our route `singlePost`, so traditionally we'd call `{{pathFor 'singlePost'}}`. Instead, here, we're being specific and setting `route='post.show'`. What gives?
 
-This will make a little more sense later, but the point of this is that we're using a _named_ route `post.show` instead of a route title. We're also passing `slug=slug`. This is saying that we want to set our `:slug` parameter equal to the `slug` value on our post. Our template knows about this `slug` value because we made the post's data available using the `data` option on our route. [No way](http://media.giphy.com/media/JMa0ue6qCey1a/giphy.gif). _Yes way_. Cool, eh?
+This will make a little more sense later, but the point of this is that we're using a _named_ route `post.show` instead of a route title. We're also passing `slug=slug`. This is saying that we want to set our `:slug` parameter equal to the `slug` value on our post. Our template knows about this `slug` value because we made the post's data available using the `data` option on our route. [No way](https://media.giphy.com/media/JMa0ue6qCey1a/giphy.gif). _Yes way_. Cool, eh?
 
 Now, hold your hat. This probably won't make sense for just a little while longer. We've got one big question mark...how do we get this data into the database?
 
@@ -265,7 +265,7 @@ Although regular expression sounds like some sort of fiber supplement for the 50
 
 Okay so how exactly does this work? First, we take our passed `value` argument (we set this whenever we call our `formatSlug()` function, equal to our post title) and convert it to lower case `toLowerCase()`. This helps us take a string like `WhY iN tHe HeLl wOuLd I TiTlE My PoSt LiKe THIS` and turn it into `why in the hell would i title my post like this`. Next, we look at the string and replace any spaces with a hyphen `-` (note, the `/g` means global, or, whenever a space occurs anywhere in our string).
 
-After that, we replace any instances of two or more hyphens, e.g., `we--dont-want----to-have-this` but rather `we-do-want-to-have-this`). Lastly, for all the chips, we run a monster regex (nerd slang for regular expression, [get into it](http://media.giphy.com/media/1XL1heNzoMWSA/giphy.gif)) that says "replace any non-alphanumeric characters, but exclude the characters in the range of x80 to xFF (non-english characters)."
+After that, we replace any instances of two or more hyphens, e.g., `we--dont-want----to-have-this` but rather `we-do-want-to-have-this`). Lastly, for all the chips, we run a monster regex (nerd slang for regular expression, [get into it](https://media.giphy.com/media/1XL1heNzoMWSA/giphy.gif)) that says "replace any non-alphanumeric characters, but exclude the characters in the range of x80 to xFF (non-english characters)."
 
 Now, as far as I'm concerned this may as well be a crop circle. It _does work_, but as more seasoned developers will tell you, regular expressions are finicky. This should take out 99% of use cases, but make sure to put it through the paces first before putting it into production.
 
@@ -340,7 +340,7 @@ $.validator.addMethod("postExists", function(value){
 });
 ```
 
-Some of this should look familiar. First, keep in mind that we're picking up the `$.validator.addMethod` function via the `themeteorchef:jquery-validation` package. Inside, we're taking the value passed (in this case the post title) and making use of our `formatSlug()` function from earlier ([DRY!](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself)) and then passing that value to a `findOne()` lookup for that `slug` in our `Posts` collection.
+Some of this should look familiar. First, keep in mind that we're picking up the `$.validator.addMethod` function via the `themeteorchef:jquery-validation` package. Inside, we're taking the value passed (in this case the post title) and making use of our `formatSlug()` function from earlier ([DRY!](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)) and then passing that value to a `findOne()` lookup for that `slug` in our `Posts` collection.
 
 If we find a post set on `unique` we return `false` meaning "no, this is not a unique post" and `true` if it is unique. Cool, eh? When this fails, we display a message to our user letting them know that the post already exists! This helps us skip the need for checking whether a post is unique on the server. Gasp! Only client side validation?!
 
